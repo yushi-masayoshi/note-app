@@ -1,0 +1,50 @@
+.app-sidebar {
+  width: 30%;
+  height: 100vh;
+  border-right: 1px solid #ddd;
+}
+
+.app-sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 25px;
+}
+
+.app-sidebar-header h1 {
+  margin: 0;
+}
+
+.sidebar-content {
+  padding: 25px;
+}
+
+.sidebar-content:hover {
+  background-color: #999;
+}
+
+.sidebar-content.gray {
+  background-color: #dcd4d4;
+}
+
+.app-sidebar-notes {
+  height: calc(100vh - 78px);
+  overflow-y: scroll;
+}
+
+.app-sidebar-note {
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.app-sidebar-note p {
+  margin: 10px 0;
+}
+
+.app-sidebar-note small {
+  color: #999;
+}
+
+.sidebar-note-title {
+  display: flex;
+  justify-content: space-between;
+}
