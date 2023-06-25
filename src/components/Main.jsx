@@ -1,20 +1,44 @@
+import { useContext} from "react";
 import "./Main.css";
+import { ChooseStateContext } from "../context/ChooseStateContext";
+import { useNotesDispatch } from "../context/NotesContext";
+import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 
 const Main = () => {
-  // const getActiveNote = () => {
-  //   return notes.find((note) => note.id === activeNote)
-  // }
+  const [active , setActive] = useContext(ChooseStateContext);
+  const dispatch = useNotesDispatch();
+    
+  // const updateNote = (note) => {
+  //   dispatch({type:'note/update' , payload: note})
+  // };
+
+  const onChangeTitle = (e) => {
+    console.log(active,e.target.value)
+    setActive({...active,title : e.target.value})
+    dispatch({type:'note/update' , payload: {title:e.target.value,id: active.id}})
+  }
+  const onChangeContent = (e) => {
+    setActive({...active,content : e.target.value})
+    dispatch({type:'note/update' , payload: {content:e.target.value,id: active.id}})
+  }
+  
+
+  if(active === "") {
+    return <div className="no-active-note">ノートを選択してください</div>
+  }
 
   return (
   <div className="app-main">
     <div className="app-main-note-edit">
-      <input type="text" />
-      <textarea id="" placeholder="ノート内容を記入"></textarea>
+      <input type="text" value={active.title} onChange={onChangeTitle}/>
+      <textarea id="" placeholder="ノート内容を記入" value={active.content} onChange={onChangeContent}></textarea>
+      {/* <button onClick={() => updateNote}>編集する</button> */}
     </div>
     <div className="app-main-note-preview">
-      <h1 className="preview-title">タイトル</h1>
-      <div className="preview-markdown">ノート内容</div>
-
+      <h1 className="preview-title">{active.title}</h1>
+      <ReactMarkdown className="preview-markdown">
+        {active.content}
+      </ReactMarkdown>
     </div>
   </div>
   )

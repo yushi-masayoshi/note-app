@@ -1,29 +1,20 @@
-import { useReducer, useState} from "react";
+import { useContext} from "react";
 import "./Sidebar.css";
+import { ChooseStateContext } from "../context/ChooseStateContext";
+import { useNotes, useNotesDispatch } from "../context/NotesContext";
 
-const notesReducer = (notes, {type,payload}) => {
-  // console.log(payload);
 
-  switch(type) {
-    case 'note/add':
-      return [...notes,payload];
-    case 'note/delete':
-      console.log(payload)
-      return notes.filter((note) =>{
-        return note.id !== payload;
-      });
-      // case 'note/choose':
-      //   (payload => !payload);
-      //   return;
-      default: 
-    return notes;
-  }
-}
+
 
 const Sidebar = () => {
-  const [notes , dispatch] = useReducer(notesReducer, []);
-  const [active , setActive] = useState("");
+  const notes = useNotes();
+  const dispatch = useNotesDispatch();
+  const [active, setActive] = useContext(ChooseStateContext);
 
+  const onClickActive = (note) => {
+    setActive(note)
+    console.log(note)
+  }
 
   const addNote = () => {
     const newNotes ={
@@ -40,12 +31,6 @@ const Sidebar = () => {
     dispatch({type:'note/delete' , payload: id})
   };
 
-  const onClickActive = (id) => {
-    console.log(id)
-    setActive(id)
-    // dispatch({type:'note/choose' , payload: activeNote})
-  }
-
 
   return (
     <>
@@ -58,7 +43,7 @@ const Sidebar = () => {
           <div className="app-sidebar-note">
             {notes.map((note) => {
               return (
-                  <div className={`sidebar-content ${active === note.id && "gray"}`} key={note.id} onClick={()=> onClickActive(note.id)}>
+                  <div className={`sidebar-content ${active.id === note.id && "gray"}`} key={note.id} onClick={()=> onClickActive(note)}>
                     <div className="sidebar-note-title">
                       <strong>{note.title}</strong>
                       <button onClick={() => deleteNote(note.id)}>削除</button>

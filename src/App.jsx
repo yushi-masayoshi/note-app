@@ -1,15 +1,14 @@
 import './App.css'
-import Main from './components/Main'
-import Sidebar from './components/Sidebar'
+import Note from './context/ChooseStateContext';
+import { NotesProvider } from './context/NotesContext';
 
 function App() {
-
   return (
     <div className='App'>
-      <Sidebar />
-      <Main />
-      
-    </div>
+      <NotesProvider>
+        <Note />
+      </NotesProvider>
+    </div>    
   )
 }
 
