@@ -13,13 +13,12 @@ const Main = () => {
   // };
 
   const onChangeTitle = (e) => {
-    console.log(active,e.target.value)
     setActive({...active,title : e.target.value})
-    dispatch({type:'note/update' , payload: {title:e.target.value,id: active.id}})
+    dispatch({type:'note/update' , payload: {title:e.target.value, id: active.id,modDate: Date.now()}})
   }
   const onChangeContent = (e) => {
     setActive({...active,content : e.target.value})
-    dispatch({type:'note/update' , payload: {content:e.target.value,id: active.id}})
+    dispatch({type:'note/update' , payload: {content:e.target.value,id: active.id ,modDate: Date.now()}})
   }
   
 

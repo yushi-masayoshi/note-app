@@ -1,12 +1,14 @@
 import { createContext, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Main from "../components/Main";
+import { useNotes } from "./NotesContext";
 
 
 export const ChooseStateContext = createContext();
 
 const Note = () => {
-  const [active , setActive] = useState("");
+  const notes = useNotes();
+  const [active , setActive] = useState(notes[0] || "");
 
   return (
     <>

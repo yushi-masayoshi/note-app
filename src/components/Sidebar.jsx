@@ -1,4 +1,4 @@
-import { useContext} from "react";
+import { useContext, useEffect} from "react";
 import "./Sidebar.css";
 import { ChooseStateContext } from "../context/ChooseStateContext";
 import { useNotes, useNotesDispatch } from "../context/NotesContext";
@@ -10,10 +10,10 @@ const Sidebar = () => {
   const notes = useNotes();
   const dispatch = useNotesDispatch();
   const [active, setActive] = useContext(ChooseStateContext);
+  const sortedNotes = notes.sort((a ,b ) => b.modDate - a.modDate);
 
   const onClickActive = (note) => {
     setActive(note)
-    console.log(note)
   }
 
   const addNote = () => {
@@ -31,6 +31,9 @@ const Sidebar = () => {
     dispatch({type:'note/delete' , payload: id})
   };
 
+  useEffect(() => {
+    localStorage.setItem("notes",JSON.stringify(notes));
+  },[notes]);
 
   return (
     <>
@@ -41,7 +44,7 @@ const Sidebar = () => {
         </div>
         <div className="app-sidebar-notes">
           <div className="app-sidebar-note">
-            {notes.map((note) => {
+            {sortedNotes.map((note) => {
               return (
                   <div className={`sidebar-content ${active.id === note.id && "gray"}`} key={note.id} onClick={()=> onClickActive(note)}>
                     <div className="sidebar-note-title">

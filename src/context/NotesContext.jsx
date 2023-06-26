@@ -1,7 +1,4 @@
 import { createContext, useContext, useReducer} from "react";
-import { ChooseStateContext } from "./ChooseStateContext";
-
-
 
 const NotesContext = createContext();
 const NotesDispatchContext = createContext();
@@ -19,7 +16,6 @@ const notesReducer = (notes, {type,payload}) => {
       //   return;
     case 'note/update':
       return notes.map((_note) => {
-        console.log(payload.id,_note.id)
         return _note.id === payload.id ? {
           ..._note,...payload} : { ..._note };
       });
@@ -31,7 +27,7 @@ const notesReducer = (notes, {type,payload}) => {
 
 
 const NotesProvider = ({children}) => {
-  const [notes , dispatch] = useReducer(notesReducer, []);
+  const [notes , dispatch] = useReducer(notesReducer, JSON.parse(localStorage.getItem("notes")) || []);
   // const [active, setActive] = useContext(ChooseStateContext);
 
 
